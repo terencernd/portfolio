@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Terence Randriamandimby</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(34, 197, 94, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #22c55e;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-links button {
+            padding: 0.7rem 1.3rem;
+            border: none;
+            background: transparent;
+            color: #a0a0a0;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-links button:hover {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .nav-links button.active {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .avatar {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 2.5rem;
+            background: linear-gradient(135deg, #166534, #22c55e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0a;
+            font-size: 2.8rem;
+            font-weight: 700;
+            box-shadow: 0 0 40px rgba(34, 197, 94, 0.3);
+            border: 3px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            color: #22c55e;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .hero .description {
+            font-size: 1.05rem;
+            color: #b0b0b0;
+            max-width: 750px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.95rem 2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #22c55e;
+            color: #0a0a0a;
+        }
+
+        .btn-primary:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #22c55e;
+            border: 2px solid #22c55e;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(34, 197, 94, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: #141414;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: 0 10px 40px rgba(34, 197, 94, 0.2);
+        }
+
+        .project-header {
+            height: 6px;
+            background: linear-gradient(90deg, #166534, #22c55e);
+        }
+
+        .project-content {
+            padding: 1.8rem;
+        }
+
+        .project-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #a0a0a0;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            padding: 0.4rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tag-tech {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .tag-skill {
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background: #141414;
+            border-radius: 10px;
+            padding: 1.8rem;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            border-color: rgba(34, 197, 94, 0.4);
+            box-shadow: 0 8px 30px rgba(34, 197, 94, 0.15);
+        }
+
+        .skill-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .skill-bar {
+            width: 4px;
+            height: 28px;
+            background: linear-gradient(180deg, #22c55e, #166534);
+            border-radius: 2px;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .skill-item {
+            padding: 0.6rem 1.1rem;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            border-radius: 6px;
+            color: #e0e0e0;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .skill-item:hover {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .timeline {
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            background: #141414;
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-left: 4px solid #22c55e;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            border-color: rgba(34, 197, 94, 0.4);
+            box-shadow: 0 8px 30px rgba(34, 197, 94, 0.15);
+        }
+
+        .timeline-item.green { border-left-color: #4ade80; }
+        .timeline-item.orange { border-left-color: #86efac; }
+        .timeline-item.purple { border-left-color: #16a34a; }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .timeline-title {
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            padding: 0.4rem 0.9rem;
+            border-radius: 5px;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .timeline-subtitle {
+            color: #22c55e;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .timeline-content {
+            color: #b0b0b0;
+            line-height: 1.7;
+        }
+
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-list li {
+            padding: 0.6rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .timeline-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .contact-container {
+            max-width: 700px;
+            margin: 2rem auto;
+        }
+
+        .contact-card {
+            background: #141414;
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.2rem;
+            background: rgba(34, 197, 94, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(34, 197, 94, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-item:hover {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            font-weight: 600;
+        }
+
+        .contact-info h3 {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            font-size: 1.05rem;
+        }
+
+        .contact-info p {
+            color: #a0a0a0;
+        }
+
+        .interests {
+            margin-top: 2rem;
+            padding: 1.8rem;
+            background: rgba(34, 197, 94, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .interests h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+        }
+
+        .interests-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .interest-tag {
+            padding: 0.6rem 1.1rem;
+            background: #1a1a1a;
+            border-radius: 6px;
+            color: #e0e0e0;
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .interest-tag:hover {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.4);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: #0f0f0f;
+            color: #a0a0a0;
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #22c55e, transparent);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 0.3rem;
+            }
+
+            .nav-links button {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">T.Randriamandimby</div>
+            <ul class="nav-links">
+                <li><button onclick="showSection('accueil')" class="active" data-section="accueil">Accueil</button></li>
+                <li><button onclick="showSection('projets')" data-section="projets">Projets</button></li>
+                <li><button onclick="showSection('competences')" data-section="competences">Compétences</button></li>
+                <li><button onclick="showSection('parcours')" data-section="parcours">Parcours</button></li>
+                <li><button onclick="showSection('contact')" data-section="contact">Contact</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="accueil" class="section active">
+            <div class="hero">
+                <div class="avatar">TR</div>
+                <h1>Terence Randriamandimby</h1>
+                <p class="subtitle">Étudiant BTS SIO - Option SLAM en Alternance</p>
+                <p class="description">
+                    Passionné par le développement web et les nouvelles technologies. En recherche d'alternance 
+                    pour développer mes compétences en développement d'applications et participer à des projets concrets.
+                </p>
+                <div class="buttons">
+                    <button class="btn btn-primary">Télécharger CV</button>
+                    <button class="btn btn-secondary" onclick="showSection('contact')">Me Contacter</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="projets" class="section">
+            <h2 class="section-title">Mes Projets</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header"></div>
+                    <div class="project-content">
+                        <h3 class="project-title">Maquette 3D Opéra Garnier</h3>
+                        <p class="project-description">
+                            Conception d'une maquette 3D de l'Opéra Garnier sur ordinateur - Projet scolaire 4ème
+                        </p>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Technologies :</p>
+                            <div class="tags">
+                                <span class="tag tag-tech">CAO</span>
+                                <span class="tag tag-tech">Modélisation 3D</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Compétences :</p>
+                            <div class="tags">
+                                <span class="tag tag-skill">Conception</span>
+                                <span class="tag tag-skill">Modélisation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header"></div>
+                    <div class="project-content">
+                        <h3 class="project-title">Autoformation en Développement</h3>
+                        <p class="project-description">
+                            Apprentissage autonome de plusieurs langages de programmation
+                        </p>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Technologies :</p>
+                            <div class="tags">
+                                <span class="tag tag-tech">Python</span>
+                                <span class="tag tag-tech">JavaScript</span>
+                                <span class="tag tag-tech">HTML</span>
+                                <span class="tag tag-tech">C</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Compétences :</p>
+                            <div class="tags">
+                                <span class="tag tag-skill">SLAM</span>
+                                <span class="tag tag-skill">Autodidacte</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header"></div>
+                    <div class="project-content">
+                        <h3 class="project-title">Portfolio Interactif</h3>
+                        <p class="project-description">
+                            Portfolio personnel avec animations et design moderne
+                        </p>
+                        <div>
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Technologies :</p>
+                            <div class="tags">
+                                <span class="tag tag-tech">HTML</span>
+                                <span class="tag tag-tech">CSS</span>
+                                <span class="tag tag-tech">JavaScript</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Compétences :</p>
+                            <div class="tags">
+                                <span class="tag tag-skill">SLAM</span>
+                                <span class="tag tag-skill">Design web</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competences" class="section">
+            <h2 class="section-title">Mes Compétences</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3 class="skill-title">
+                        <span class="skill-bar"></span>
+                        Langages
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">JavaScript</span>
+                        <span class="skill-item">HTML</span>
+                        <span class="skill-item">CSS</span>
+                        <span class="skill-item">PHP</span>
+                        <span class="skill-item">MySQL</span>
+                        <span class="skill-item">Notions de C</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3 class="skill-title">
+                        <span class="skill-bar"></span>
+                        Développement Web
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Front-end</span>
+                        <span class="skill-item">Back-end</span>
+                        <span class="skill-item">Responsive Design</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3 class="skill-title">
+                        <span class="skill-bar"></span>
+                        Soft Skills
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Apprentissage autonome</span>
+                        <span class="skill-item">Rigueur</span>
+                        <span class="skill-item">Organisation</span>
+                        <span class="skill-item">Motivation</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3 class="skill-title">
+                        <span class="skill-bar"></span>
+                        Outils
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Git</span>
+                        <span class="skill-item">VS Code</span>
+                        <span class="skill-item">PhpMyAdmin</span>
+                        <span class="skill-item">CAO</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="parcours" class="section">
+            <h2 class="section-title">Mon Parcours</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h3 class="timeline-title">BTS SIO - Option SLAM</h3>
+                        <span class="timeline-date">2025 - 2027</span>
+                    </div>
+                    <p class="timeline-subtitle">En recherche d'alternance</p>
+                    <ul class="timeline-list">
+                        <li>Développement d'applications web (HTML, CSS, JavaScript, PHP, MySQL)</li>
+                        <li>Gestion de bases de données et programmation orientée objet</li>
+                        <li>Conception et développement d'applications</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item green">
+                    <div class="timeline-header">
+                        <h3 class="timeline-title">Conseiller Municipal de Jeunes</h3>
+                        <span class="timeline-date">Villeneuve-la-Garenne</span>
+                    </div>
+                    <p class="timeline-content">
+                        Collecte des idées des jeunes sur les projets de la ville et représentation 
+                        auprès du conseil municipal pour faire valoir leurs propositions.
+                    </p>
+                </div>
+
+                <div class="timeline-item orange">
+                    <div class="timeline-header">
+                        <h3 class="timeline-title">Stage - Cabinet de Podologie</h3>
+                        <span class="timeline-date">Classe de 3ème</span>
+                    </div>
+                    <p class="timeline-content">
+                        Découverte du fonctionnement d'une entreprise : tâches administratives et 
+                        sensibilisation à la production de semelles orthopédiques.
+                    </p>
+                </div>
+
+                <div class="timeline-item purple">
+                    <div class="timeline-header">
+                        <h3 class="timeline-title">Coach & Arbitre Sportif</h3>
+                        <span class="timeline-date">Roller Hockey & Volley</span>
+                    </div>
+                    <p class="timeline-content">
+                        Encadrement et coaching des équipes jeunes en roller hockey et volley-ball. 
+                        Activité d'arbitrage lors des matchs.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2 class="section-title">Me Contacter</h2>
+            <div class="contact-container">
+                <div class="contact-card">
+                    <div class="contact-item">
+                        <div class="contact-icon">@</div>
+                        <div class="contact-info">
+                            <h3>Email</h3>
+                            <p>terencerandriamandimby@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">Tel</div>
+                        <div class="contact-info">
+                            <h3>Téléphone</h3>
+                            <p>06 56 89 84 47</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">Loc</div>
+                        <div class="contact-info">
+                            <h3>Localisation</h3>
+                            <p>Villeneuve-la-Garenne</p>
+                        </div>
+                    </div>
+
+                    <div class="interests">
+                        <h3>Centres d'intérêt</h3>
+                        <div class="interests-grid">
+                            <span class="interest-tag">Volley-ball</span>
+                            <span class="interest-tag">Tennis</span>
+                            <span class="interest-tag">Musique</span>
+                            <span class="interest-tag">Mangas</span>
+                            <span class="interest-tag">Informatique</span>
+                            <span class="interest-tag">Jeux vidéo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 - Terence Randriamandimby</p>
+        <p style="color: #666; font-size: 0.9rem;">Portfolio BTS SIO - Option SLAM</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+
+            const buttons = document.querySelectorAll('.nav-links button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.getAttribute('data-section') === sectionId) {
+                    button.classList.add('active');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
